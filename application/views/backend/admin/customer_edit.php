@@ -6,7 +6,7 @@ foreach ($update as $row):
     ?>
 
     <?php
-    echo form_open(base_url() . 'index.php?admin/getCustomers/edit/' . $row['customer_id'], array(
+    echo form_open(base_url() . 'index.php?admin/getClients/edit/' . $row['customer_id'], array(
         'class' => 'form-horizontal form-bordered', 'data-parsley-validate' => 'true', 'enctype' => 'multipart/form-data'
     ));
     ?>
@@ -69,7 +69,7 @@ foreach ($update as $row):
             Address
         </label>
         <div class="col-md-6 col-sm-6">
-            <textarea class="form-control" name="address" value="<?php echo $row['address'] ?>" placeholder="Client Address" rows="3"></textarea>
+            <textarea class="form-control" name="address" value="" placeholder="Client Address" rows="3"><?php echo $row['address'] ?></textarea>
         </div>
     </div>
 
@@ -89,7 +89,7 @@ foreach ($update as $row):
         </label>
         <div class="col-md-6 col-sm-6">
             <select id="clientselec" name="client_pop" class="form-control">
-                <option selected value="<?php echo $row['client_pop'] ?>"<?php echo $row['client_pop'] ?>></option>
+                <option selected value="<?php echo $row['client_pop'] ?>"><?php echo $row['client_pop'] ?></option>
                 <option value="client">Client</option>
                 <option value="pop">Pop</option>
             </select>

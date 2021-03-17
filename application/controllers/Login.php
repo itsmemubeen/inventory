@@ -45,7 +45,7 @@ class Login extends CI_Controller
             redirect(base_url() . 'index.php?admin/dashboard', 'refresh');
         }
         // AUTHENTICATE CUSTOMER LOGIN
-        $query = $this->db->get_where('customer', array(
+        $query = $this->db->get_where('admin', array(
             'email' => $email,
             'password' => $password
         ));
@@ -58,7 +58,7 @@ class Login extends CI_Controller
             redirect(base_url() . 'index.php?customer/dashboard', 'refresh');
         }
         // AUTHENTICATE EMPLOYEE LOGIN
-        $query = $this->db->get_where('employee', array(
+        $query = $this->db->get_where('admin', array(
             'email' => $email,
             'password' => $password
         ));

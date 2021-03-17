@@ -59,18 +59,19 @@ class Admin extends CI_Controller
         }
         if ($param1 == 'edit') {
             $data['name'] = $this->input->post('name');
-            $data['email'] = $this->input->post('email');
+            // $data['email'] = $this->input->post('email');
             $data['phone'] = $this->input->post('phone');
             $data['address'] = $this->input->post('address');
-            $data['gender'] = $this->input->post('gender');
-            $data['discount_percentage'] = $this->input->post('discount_percentage');
+            $data['client_pop'] = $this->input->post('client_pop');
+            // $data['gender'] = $this->input->post('gender');
+            // $data['discount_percentage'] = $this->input->post('discount_percentage');
             $this->db->where('customer_id', $param2);
             $this->db->update('customer', $data);
 
 
-            move_uploaded_file($_FILES['userfile']['tmp_name'], 'uploads/customer_image/' . $param2 . '.jpg');
+            // move_uploaded_file($_FILES['userfile']['tmp_name'], 'uploads/customer_image/' . $param2 . '.jpg');
             $this->session->set_flashdata('flash_message', 'Customer Information Has Been Updated');
-            redirect(base_url() . 'index.php?admin/getCustomers', 'refresh');
+            redirect(base_url() . 'index.php?admin/getClients', 'refresh');
         }
         if ($param1 == 'delete') {
 
@@ -112,13 +113,13 @@ class Admin extends CI_Controller
             // $email_to = $data['email'];
             $this->session->set_flashdata('flash_message', 'A New Vendor has Been Created');
             // $this->email_model->account_opening_email('customer', $email_to, $password_unhashed);
-            redirect(base_url() . 'index.php?admin/getVendors', 'refresh');
+            redirect(base_url() . 'index.php?admin/c', 'refresh');
         }
         if ($param1 == 'edit') {
             $data['name'] = $this->input->post('name');
             // $data['email'] = $this->input->post('email');
             // $data['password'] = sha1($this->input->post('password'));
-            $data['cnic'] = $this->input->post('cnic');
+            $data['cnic/ntn'] = $this->input->post('cnic/ntn');
             $data['sales'] = $this->input->post('sales');
             $data['whtax'] = $this->input->post('whtax');
             $data['sales_tax'] = $this->input->post('sales_tax');
@@ -128,9 +129,9 @@ class Admin extends CI_Controller
             $this->db->update('vendors', $data);
 
 
-            move_uploaded_file($_FILES['userfile']['tmp_name'], 'uploads/customer_image/' . $param2 . '.jpg');
+            // move_uploaded_file($_FILES['userfile']['tmp_name'], 'uploads/customer_image/' . $param2 . '.jpg');
             $this->session->set_flashdata('flash_message', 'Customer Information Has Been Updated');
-            redirect(base_url() . 'index.php?admin/getCustomers', 'refresh');
+            redirect(base_url() . 'index.php?admin/getVendors', 'refresh');
         }
         if ($param1 == 'delete') {
 
@@ -1033,15 +1034,15 @@ class Admin extends CI_Controller
             redirect(base_url() . 'index.php?admin/employee', 'refresh');
         }
         if ($param1 == 'edit') {
-            $data['name'] = $this->input->post('name');
+             $data['name'] = $this->input->post('name');
             $data['email'] = $this->input->post('email');
-            $data['type'] = $this->input->post('type');
-            $data['phone'] = $this->input->post('phone');
-            $data['address'] = $this->input->post('address');
+            $data['department'] = $this->input->post('department');
+            $data['pno'] = $this->input->post('pno');
+            $data['designation'] = $this->input->post('designation');
             $this->db->where('employee_id', $param2);
             $this->db->update('employee', $data);
             // UPLOAD IMAGE FILE
-            move_uploaded_file($_FILES['userfile']['tmp_name'], 'uploads/employee_image/' . $param2 . '.jpg');
+            // move_uploaded_file($_FILES['userfile']['tmp_name'], 'uploads/employee_image/' . $param2 . '.jpg');
             $this->session->set_flashdata('flash_message', 'Stuff Information Has Been Updated');
             redirect(base_url() . 'index.php?admin/employee', 'refresh');
         }

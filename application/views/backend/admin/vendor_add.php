@@ -30,7 +30,7 @@
 		</label>
 		<div class="col-md-6 col-sm-6">
 			<input class="form-control" type="text" name="cnic" required
-				placeholder="Vendor Name"/>
+				placeholder="Vendor CNIC/NTN"/>
 		</div>
 	</div>
 	<div class="form-group">
@@ -39,7 +39,7 @@
 		</label>
 		<div class="col-md-6 col-sm-6">
 			<input class="form-control" type="text" name="sales" required
-				placeholder="Vendor Name"/>
+				placeholder="Vendor SALES"/>
 		</div>
 	</div>
 	<div class="form-group">
@@ -48,7 +48,7 @@
 		</label>
 		<div class="col-md-6 col-sm-6">
 			<input class="form-control" type="text" name="whtax" required
-				placeholder="Vendor Name"/>
+				placeholder="Vendor With Holding TAX %"/>
 		</div>
 	</div>
 	<div class="form-group">
@@ -57,7 +57,7 @@
 		</label>
 		<div class="col-md-6 col-sm-6">
 			<input class="form-control" type="text" name="sales_tax" required
-				placeholder="Vendor Name"/>
+				placeholder="Vendor Sales TAX %"/>
 		</div>
 	</div>
 

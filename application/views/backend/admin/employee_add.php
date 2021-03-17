@@ -33,7 +33,7 @@ echo form_open(base_url() . 'index.php?admin/employee/create/', array(
 
     <div class="col-md-6 col-sm-6">
         <input class="form-control" type="text" name="department" required
-               placeholder="Password"/>
+               placeholder="Staff Department"/>
     </div>
 </div>
 
@@ -44,7 +44,7 @@ echo form_open(base_url() . 'index.php?admin/employee/create/', array(
 
     <div class="col-md-6 col-sm-6">
         <input class="form-control" type="text" name="pno" required
-               placeholder="Password"/>
+               placeholder="Staff Phone No"/>
     </div>
 </div>
 
@@ -55,7 +55,7 @@ echo form_open(base_url() . 'index.php?admin/employee/create/', array(
 
     <div class="col-md-6 col-sm-6">
         <input class="form-control" type="text" name="designation"
-               placeholder="Stuff Phone Number"/>
+               placeholder="Staff Designation"/>
     </div>
 </div>
 

@@ -58,12 +58,12 @@
                                         <td><?php echo $row['sales_tax']; ?></td>
                                         <td>
                                             <button
-                                                onclick="showMessageModal('<?php echo base_url(); ?>index.php?modal/popup/customer_profile/<?php echo $row['id']; ?>');"
+                                                onclick="showMessageModal('<?php echo base_url(); ?>index.php?modal/popup/vendor_profile/<?php echo $row['id']; ?>');"
                                                 class="btn btn-info btn-icon btn-circle btn-sm">
                                                 <i class="fa fa-user"></i>
                                             </button>
                                             <button
-                                                onclick="showAjaxModal('<?php echo base_url(); ?>index.php?modal/popup/customer_edit/<?php echo $row['id']; ?>');"
+                                                onclick="showAjaxModal('<?php echo base_url(); ?>index.php?modal/popup/vendor_edit/<?php echo $row['id']; ?>');"
                                                 class="btn btn-success btn-icon btn-circle btn-sm">
                                                 <i class="fa fa-edit"></i>
                                             </button>
