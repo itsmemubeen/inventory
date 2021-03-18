@@ -1,4 +1,4 @@
-<!-- Content Wrapper. Contains page content -->
+Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -27,7 +27,7 @@
     <!-- Main content -->
     <section class="content">
         <?php
-        echo form_open(base_url() . 'index.php?admin/make_order/create/', array(
+        echo form_open(base_url() . 'index.php?admin/createOrder/create/', array(
             'class' => 'form-horizontal', 'data-parsley-validate' => 'true', 'enctype' => 'multipart/form-data'
         ));
         ?>
@@ -105,7 +105,7 @@
                                 </label>
                                 <div class="col-md-9 col-sm-9">
                                     <select class="form-control selectpicker" data-size="10" data-live-search="true"
-                                            data-style="btn-default" data-parsley-required="true" name="customer_id"
+                                            data-style="btn-default" data-parsley-required="true" name="solution"
                                             onchange="return get_customer_discount(this.value)">
                                             <option selected="">Select Solution</option>
                                         <option>Wireless</option>
@@ -179,177 +179,12 @@
                                     </tr>
                                     </thead>
                                     <tbody id="order_entry_holder">
-
+                                        
                                     </tbody>
                                 </table>
                             </div>
                         </div>
-
-                    </div>
-                </div>
-                <!-- end panel -->
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-7">
-                <!-- begin panel -->
-                <div class="box box-primary" data-sortable-id="ui-widget-10">
-                    <div class="box-header">
-
-                        <h4 class="box-title">
-                            Other Information
-                        </h4>
-                    </div>
-                    <div class="box-body">
-
-                        <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3">
-                                Order Status
-                            </label>
-
-                            <div class="col-md-9 col-sm-9">
-                                <select class="form-control selectpicker" data-size="10" data-live-search="true"
-                                        data-style="btn-default" data-parsley-required="true" name="order_status">
-                                    <option value="" selected>Select Order Status</option>
-                                    <option value="0">Partially Paid</option>
-                                    <option value="1">Approved</option>
-                                    <option value="2">Rejected</option>
-                                    <option value="3">Product Sent Full Payment Due</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3">
-                                Payment Status
-                            </label>
-
-                            <div class="col-md-9 col-sm-9">
-                                <select class="form-control selectpicker" data-size="10" data-live-search="true"
-                                        data-style="btn-default" data-parsley-required="true" name="payment_status">
-                                    <option value="" selected>Select Payment Status</option>
-                                    <option value="0">Unpaid</option>
-                                    <option value="1">Paid</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3">
-                                Address
-                            </label>
-
-                            <div class="col-md-9 col-sm-9">
-                            <textarea class="form-control" id="shipping_address" name="shipping_address"
-                                      placeholder="Shipping Address" rows="3"></textarea>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3">
-                                Note
-                            </label>
-
-                            <div class="col-md-9 col-sm-9">
-                            <textarea id="wysihtml5" class="form-control" name="note" placeholder="Notes"
-                                      rows="3"></textarea>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-                <!-- end panel -->
-            </div>
-            <div class="col-md-5">
-                <!-- begin panel -->
-                <div class="box box-primary" data-sortable-id="ui-widget-10">
-                    <div class="box-header">
-                        <h4 class="box-title">
-                            Payment
-                        </h4>
-                    </div>
-                    <div class="box-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered">
-                                <tbody>
-                                <tr>
-                                    <td>Sub Total</td>
-                                    <td>
-                                        <input type="text" class="form-control text-right" id="sub_total" value=""
-                                               name="sub_total">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Discount</td>
-                                    <td id="customer_discount_holder">
-                                        <input class="form-control text-right" type="text" name="discount_percentage"
-                                               id="discount_percentage" value=""
-                                               onkeyup="calculate_grand_total()"
-                                               data-parsley-required="true">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>VAT</td>
-                                    <td>
-                                        <input class="form-control text-right" type="text" name="vat_percentage"
-                                               id="vat_percentage" onkeyup="calculate_grand_total()"
-                                               value="<?php echo $this->db->get_where('settings', array('type' => 'vat_percentage'))->row()->description; ?>"
-                                               placeholder="VAT percentages"
-                                               data-parsley-required="true">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Grand Total</td>
-                                    <td>
-                                        <input type="text" class="form-control text-right" id="grand_total" value=""
-                                               name="grand_total">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Payment</td>
-                                    <td>
-                                        <input class="form-control text-right" type="text" name="" id="payment" value=""
-                                               onkeyup="return calculate_change_amount()"
-                                               placeholder="Enter Payment Amount"
-                                               data-parsley-required="true">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Net Payment</td>
-                                    <td>
-                                        <input type="text" class="form-control text-right" value="" id="net_payment"
-                                               name="amount">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Due</td>
-                                    <td>
-                                        <input type="text" class="form-control text-right" value="" id="due_amount"
-                                               name="due">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Method</td>
-                                    <td>
-                                        <select class="form-control" name="method" data-parsley-required="true">
-                                            <option value=""
-                                                    selected>Select Payment Method
-                                            </option>
-                                            <option value="2">Cash</option>
-                                            <option value="3">Check</option>
-                                            <option value="4">Card</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            <div class="form-group col-md-10">
-                                <button type="submit"
-                                        class="btn btn-success">Create New Order
-                                </button>
-                            </div>
-                        </div>
+                        <button type="submit" class="btn btn-success">Create New Order</button>
                     </div>
                 </div>
                 <!-- end panel -->
@@ -497,3 +332,170 @@
     }
 
 </script>
+
+
+
+<!-- <div class="row">
+            <div class="col-md-7"> -->
+                <!-- begin panel -->
+                <!-- <div class="box box-primary" data-sortable-id="ui-widget-10">
+                    <div class="box-header">
+
+                        <h4 class="box-title">
+                            Other Information
+                        </h4>
+                    </div>
+                    <div class="box-body">
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3">
+                                Order Status
+                            </label>
+
+                            <div class="col-md-9 col-sm-9">
+                                <select class="form-control selectpicker" data-size="10" data-live-search="true"
+                                        data-style="btn-default" data-parsley-required="true" name="order_status">
+                                    <option value="" selected>Select Order Status</option>
+                                    <option value="0">Partially Paid</option>
+                                    <option value="1">Approved</option>
+                                    <option value="2">Rejected</option>
+                                    <option value="3">Product Sent Full Payment Due</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3">
+                                Payment Status
+                            </label>
+
+                            <div class="col-md-9 col-sm-9">
+                                <select class="form-control selectpicker" data-size="10" data-live-search="true"
+                                        data-style="btn-default" data-parsley-required="true" name="payment_status">
+                                    <option value="" selected>Select Payment Status</option>
+                                    <option value="0">Unpaid</option>
+                                    <option value="1">Paid</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3">
+                                Address
+                            </label>
+
+                            <div class="col-md-9 col-sm-9">
+                            <textarea class="form-control" id="shipping_address" name="shipping_address"
+                                      placeholder="Shipping Address" rows="3"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3">
+                                Note
+                            </label>
+
+                            <div class="col-md-9 col-sm-9">
+                            <textarea id="wysihtml5" class="form-control" name="note" placeholder="Notes"
+                                      rows="3"></textarea>
+                            </div>
+                        </div>
+
+                    </div>
+                </div> -->
+                <!-- end panel -->
+            <!-- </div>
+            <div class="col-md-5"> -->
+                <!-- begin panel -->
+                <!-- <div class="box box-primary" data-sortable-id="ui-widget-10">
+                    <div class="box-header">
+                        <h4 class="box-title">
+                            Payment
+                        </h4>
+                    </div>
+                    <div class="box-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <tbody>
+                                <tr>
+                                    <td>Sub Total</td>
+                                    <td>
+                                        <input type="text" class="form-control text-right" id="sub_total" value=""
+                                               name="sub_total">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Discount</td>
+                                    <td id="customer_discount_holder">
+                                        <input class="form-control text-right" type="text" name="discount_percentage"
+                                               id="discount_percentage" value=""
+                                               onkeyup="calculate_grand_total()"
+                                               data-parsley-required="true">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>VAT</td>
+                                    <td>
+                                        <input class="form-control text-right" type="text" name="vat_percentage"
+                                               id="vat_percentage" onkeyup="calculate_grand_total()"
+                                               value="<?php echo $this->db->get_where('settings', array('type' => 'vat_percentage'))->row()->description; ?>"
+                                               placeholder="VAT percentages"
+                                               data-parsley-required="true">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Grand Total</td>
+                                    <td>
+                                        <input type="text" class="form-control text-right" id="grand_total" value=""
+                                               name="grand_total">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Payment</td>
+                                    <td>
+                                        <input class="form-control text-right" type="text" name="" id="payment" value=""
+                                               onkeyup="return calculate_change_amount()"
+                                               placeholder="Enter Payment Amount"
+                                               data-parsley-required="true">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Net Payment</td>
+                                    <td>
+                                        <input type="text" class="form-control text-right" value="" id="net_payment"
+                                               name="amount">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Due</td>
+                                    <td>
+                                        <input type="text" class="form-control text-right" value="" id="due_amount"
+                                               name="due">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Method</td>
+                                    <td>
+                                        <select class="form-control" name="method" data-parsley-required="true">
+                                            <option value=""
+                                                    selected>Select Payment Method
+                                            </option>
+                                            <option value="2">Cash</option>
+                                            <option value="3">Check</option>
+                                            <option value="4">Card</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="form-group col-md-10">
+                                <button type="submit"
+                                        class="btn btn-success">Create New Order
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                <!-- end panel -->
+            <!-- </div>
+        </div>

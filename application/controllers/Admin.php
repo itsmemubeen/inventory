@@ -1344,6 +1344,46 @@ class Admin extends CI_Controller
         //redirect(base_url() . 'index.php?admin/view_all_orders');
     }
 
+    function createOrder($param1 = '', $param2 = '', $param3 = '')
+    {
+        if ($this->session->userdata('admin_login') != 1)
+            redirect(base_url() . 'index.php?login');
+        if ($param1 == 'create') {
+            $data['form_id'] = $this->input->post('order_number');
+            $data['employee_id'] = $this->input->post('customer_id');
+            $data['solution_type'] = $this->input->post('solution');
+            $data['issue_date'] = $this->input->post('creating_timestamp');
+            $order_entries = array();
+        $product_ids = $this->input->post('product_id');
+        $quantities = $this->input->post('quantity');
+        $selling_prices = $this->input->post('selling_price');
+        $number_of_entries = sizeof($product_ids);
+        for ($i = 0; $i < $number_of_entries; $i++) {
+            if ($product_ids[$i] != "" && $quantities[$i] != "" && $selling_prices[$i] != "") {
+                $new_order_entry = array(
+                    'product_id' => $product_ids[$i],
+                    'quantity' => $quantities[$i],
+                    'selling_price' => $selling_prices[$i]
+                );
+                array_push($order_entries, $new_order_entry);
+                // DECREASE THE PRODUCT QUANTITY IN STOCK IF ORDER IS APPROVED
+                //if ($data['order_status'] == 1) {
+                $this->db->where('product_id', $product_ids[$i]);
+                $this->db->set('stock_quantity', 'stock_quantity - ' . $quantities[$i], FALSE);
+                $this->db->update('product');
+                //}
+            }
+        }
+        $data['products_data'] = json_encode($order_entries);
+
+            
+            $this->db->insert('issue_inventory', $data);
+            
+            $this->session->set_flashdata('flash_message', 'A New Order has Been Created');
+            redirect(base_url() . 'index.php?admin/add_a_new_order', 'refresh');
+        }
+    }
+
 }
 
 /* End of file admin.php */
