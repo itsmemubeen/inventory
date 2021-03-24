@@ -5,7 +5,7 @@
         <ol class="breadcrumb">
             <li><a href="<?php echo base_url(); ?>index.php?admin/dashboard"><i class="fa fa-dashboard"></i> Home</a>
             </li>
-            <li class="active"><a href="<?php echo base_url(); ?>index.php?admin/getpop">Customer</a></li>
+            <li class="active"><a href="<?php echo base_url(); ?>index.php?admin/customer">Customer</a></li>
         </ol>
     </section>
     <section class="content">

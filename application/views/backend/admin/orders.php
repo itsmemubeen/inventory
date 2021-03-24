@@ -59,256 +59,56 @@
                                 <div class="tab-pane fade active in" id="nav-pills-tab-1">
                                     <div class="table-responsive">
 
-                                        <table id="data-table" class="table table-striped table-bordered">
-                                            <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Order Code</th>
-                                                <th>Customer</th>
-                                                <th>Email</th>
-                                                <th>Shipping Address</th>
-                                                <th>Date Created</th>
-                                                <th>Total Paid</th>
-                                                <th>Last Modified</th>
-                                                <th>Operations</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <?php
-                                            $count = 1;
-                                            $pending_orders = $this->db->get_where('order', array(
-                                                'order_status' => 0
-                                            ))->result_array();
-                                            foreach ($pending_orders as $row):
-                                                ?>
-                                                <tr>
-                                                    <td><?php echo $count++; ?></td>
-                                                    <td><?php echo $row['order_number']; ?></td>
-                                                    <td><?php echo $this->db->get_where('customer', array('customer_id' => $row['customer_id']))->row()->name; ?></td>
-                                                    <td>
-                                                        <?php echo $this->db->get_where('customer', array('customer_id' => $row['customer_id']))->row()->email; ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php echo $row['shipping_address']; ?>
-                                                    </td>
-                                                    <td><?php echo date('dS M, Y', $row['creating_timestamp']); ?></td>
-                                                    <td><?php echo $row['grand_total'] . ' BDT'; ?></td>
-                                                    <td><?php if ($row['modifying_timestamp'] != '') echo date('dS M, Y', $row['modifying_timestamp']); ?></td>
-                                                    <td>
-                                                        <a href="<?php echo base_url(); ?>index.php?admin/order_edit/<?php echo $row['order_id']; ?>"
-                                                           class="btn btn-info btn-xs">
-                                                            Change Status
-                                                        </a>
-                                                        <a href="<?php echo base_url(); ?>index.php?admin/order_invoice_view/<?php echo $row['order_id']; ?>"
-                                                           class="btn btn-success btn-xs">
-                                                            View Invoice
-                                                        </a>
-                                                        <?php if ($row['due'] != 0): ?>
-                                                            <a href="<?php echo base_url(); ?>index.php?admin/take_order_payment/<?php echo $row['order_id']; ?>"
-                                                               class="btn btn-primary btn-xs">
-                                                                <i class="fa fa-money"></i> Receive Payment
-                                                            </a>
-                                                        <?php endif; ?>
-                                                        <a href="<?php echo base_url(); ?>index.php?admin/generate_order_invoice/<?php echo $row['order_id']; ?>"
-                                                           class="btn btn-dropbox btn-xs">
-                                                            <i class="fa fa-download"></i> Download Order Invoice</a>
-                                                    </td>
-                                                </tr>
-                                            <?php endforeach; ?>
-                                            </tbody>
-                                        </table>
+                                        <table id="data-table" class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Form Code</th>
+                                    <th>Employee ID</th>
+                                    <!-- <th>Email</th> -->
+                                    <th>Solution Type</th>
+                                    <th>Product</th>
+                                    <th>Issue Date</th>
+                                    <th>Operation</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <?php
+                                $count = 1;
+                                foreach ($inventory as $row):
+                                    ?>
+                                    <tr>
+                                        <td><?php echo $count++; ?></td>
+                                        <td><?php echo $row['customer_code']; ?></td>
+                                        <td><?php echo $row['name']; ?></td>
+                                        <!-- <td><?php echo $row['email']; ?></td> -->
+                                        <td><?php echo $row['address']; ?></td>
+                                        <td><?php echo $row['phone']; ?></td>
+                                        <td><?php echo $row['client_pop']; ?></td>
+                                        <td>
+                                            <button
+                                                onclick="showMessageModal('<?php echo base_url(); ?>index.php?modal/popup/customer_profile/<?php echo $row['customer_id']; ?>');"
+                                                class="btn btn-info btn-icon btn-circle btn-sm">
+                                                <i class="fa fa-user"></i>
+                                            </button>
+                                            <button
+                                                onclick="showAjaxModal('<?php echo base_url(); ?>index.php?modal/popup/customer_edit/<?php echo $row['customer_id']; ?>');"
+                                                class="btn btn-success btn-icon btn-circle btn-sm">
+                                                <i class="fa fa-edit"></i>
+                                            </button>
+                                            <!-- <button
+                                                onclick="showDeleteModal('<?php echo base_url(); ?>index.php?admin/getClients/delete/<?php echo $row['customer_id']; ?>');"
+                                                class="btn btn-warning btn-icon btn-circle btn-sm">
+                                                <i class="fa fa-trash"></i>
+                                            </button> -->
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                                </tbody>
+                            </table>
                                     </div>
                                 </div>
-                                <div class="tab-pane fade in" id="nav-pills-tab-2">
-                                    <div class="table-responsive">
 
-                                        <table id="data-table" class="table table-striped table-bordered">
-                                            <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Order Code</th>
-                                                <th>Customer</th>
-                                                <th>Email</th>
-                                                <th>Shipping Address</th>
-                                                <th>Date Created</th>
-                                                <th>Total Paid</th>
-                                                <th>Last Modified</th>
-                                                <th>Operations</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <?php
-                                            $count = 1;
-                                            $pending_orders = $this->db->get_where('order', array(
-                                                'order_status' => 1
-                                            ))->result_array();
-                                            foreach ($pending_orders as $row):
-                                                ?>
-                                                <tr>
-                                                    <td><?php echo $count++; ?></td>
-                                                    <td><?php echo $row['order_number']; ?></td>
-                                                    <td><?php echo $this->db->get_where('customer', array('customer_id' => $row['customer_id']))->row()->name; ?></td>
-                                                    <td>
-                                                        <?php echo $this->db->get_where('customer', array('customer_id' => $row['customer_id']))->row()->email; ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php echo $row['shipping_address']; ?>
-                                                    </td>
-                                                    <td><?php echo date('dS M, Y', $row['creating_timestamp']); ?></td>
-                                                    <td><?php echo $row['grand_total'] . ' BDT'; ?></td>
-                                                    <td><?php if ($row['modifying_timestamp'] != '') echo date('dS M, Y', $row['modifying_timestamp']); ?></td>
-                                                    <td>
-                                                        <a href="<?php echo base_url(); ?>index.php?admin/order_edit/<?php echo $row['order_id']; ?>"
-                                                           class="btn btn-info btn-xs">
-                                                            Change Status
-                                                        </a>
-                                                        <a href="<?php echo base_url(); ?>index.php?admin/order_invoice_view/<?php echo $row['order_id']; ?>"
-                                                           class="btn btn-success btn-xs">
-                                                            View Invoice
-                                                        </a>
-                                                        <?php if ($row['due'] != 0): ?>
-                                                            <a href="<?php echo base_url(); ?>index.php?admin/take_order_payment/<?php echo $row['order_id']; ?>"
-                                                               class="btn btn-primary btn-xs">
-                                                                <i class="fa fa-money"></i> Receive Payment
-                                                            </a>
-                                                        <?php endif; ?>
-                                                        <a href="<?php echo base_url(); ?>index.php?admin/generate_order_invoice/<?php echo $row['order_id']; ?>"
-                                                           class="btn btn-dropbox btn-xs">
-                                                            <i class="fa fa-download"></i> Download Order Invoice
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                            <?php endforeach; ?>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade in" id="nav-pills-tab-3">
-                                    <div class="table-responsive">
-
-                                        <table id="data-table" class="table table-striped table-bordered">
-                                            <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Order Code</th>
-                                                <th>Customer</th>
-                                                <th>Email</th>
-                                                <th>Shipping Address</th>
-                                                <th>Date Created</th>
-                                                <th>Total Paid</th>
-                                                <th>Last Modified</th>
-                                                <th>Operations</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <?php
-                                            $count = 1;
-                                            $pending_orders = $this->db->get_where('order', array(
-                                                'order_status' => 2
-                                            ))->result_array();
-                                            foreach ($pending_orders as $row):
-                                                ?>
-                                                <tr>
-                                                    <td><?php echo $count++; ?></td>
-                                                    <td><?php echo $row['order_number']; ?></td>
-                                                    <td><?php echo $this->db->get_where('customer', array('customer_id' => $row['customer_id']))->row()->name; ?></td>
-                                                    <td>
-                                                        <?php echo $this->db->get_where('customer', array('customer_id' => $row['customer_id']))->row()->email; ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php echo $row['shipping_address']; ?>
-                                                    </td>
-                                                    <td><?php echo date('dS M, Y', $row['creating_timestamp']); ?></td>
-                                                    <td><?php echo $row['grand_total'] . ' BDT'; ?></td>
-                                                    <td><?php if ($row['modifying_timestamp'] != '') echo date('dS M, Y', $row['modifying_timestamp']); ?></td>
-                                                    <td>
-                                                        <a href="<?php echo base_url(); ?>index.php?admin/order_edit/<?php echo $row['order_id']; ?>"
-                                                           class="btn btn-info btn-xs">
-                                                            Change Status
-                                                        </a>
-                                                        <a href="<?php echo base_url(); ?>index.php?admin/order_invoice_view/<?php echo $row['order_id']; ?>"
-                                                           class="btn btn-success btn-xs">
-                                                            View Invoice
-                                                        </a>
-                                                        <?php if ($row['due'] != 0): ?>
-                                                            <a href="<?php echo base_url(); ?>index.php?admin/take_order_payment/<?php echo $row['order_id']; ?>"
-                                                               class="btn btn-primary btn-xs">
-                                                                <i class="fa fa-money"></i> Receive Payment
-                                                            </a>
-                                                        <?php endif; ?>
-                                                        <a href="<?php echo base_url(); ?>index.php?admin/generate_order_invoice/<?php echo $row['order_id']; ?>"
-                                                           class="btn btn-dropbox btn-xs">
-                                                            <i class="fa fa-download"></i>Download Order Invoice
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                            <?php endforeach; ?>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade in" id="nav-pills-tab-4">
-                                    <div class="table-responsive">
-
-                                        <table id="data-table" class="table table-striped table-bordered">
-                                            <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Order Code</th>
-                                                <th>Customer</th>
-                                                <th>Email</th>
-                                                <th>Shipping Address</th>
-                                                <th>Date Created</th>
-                                                <th>Total Paid</th>
-                                                <th>Last Modified</th>
-                                                <th>Operations</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <?php
-                                            $count = 1;
-                                            $pending_orders = $this->db->get_where('order', array(
-                                                'order_status' => 3
-                                            ))->result_array();
-                                            foreach ($pending_orders as $row):
-                                                ?>
-                                                <tr>
-                                                    <td><?php echo $count++; ?></td>
-                                                    <td><?php echo $row['order_number']; ?></td>
-                                                    <td><?php echo $this->db->get_where('customer', array('customer_id' => $row['customer_id']))->row()->name; ?></td>
-                                                    <td>
-                                                        <?php echo $this->db->get_where('customer', array('customer_id' => $row['customer_id']))->row()->email; ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php echo $row['shipping_address']; ?>
-                                                    </td>
-                                                    <td><?php echo date('dS M, Y', $row['creating_timestamp']); ?></td>
-                                                    <td><?php echo $row['grand_total'] . ' BDT'; ?></td>
-                                                    <td><?php if ($row['modifying_timestamp'] != '') echo date('dS M, Y', $row['modifying_timestamp']); ?></td>
-                                                    <td>
-                                                        <a href="<?php echo base_url(); ?>index.php?admin/order_edit/<?php echo $row['order_id']; ?>"
-                                                           class="btn btn-info btn-xs">
-                                                            Change Status
-                                                        </a>
-                                                        <a href="<?php echo base_url(); ?>index.php?admin/order_invoice_view/<?php echo $row['order_id']; ?>"
-                                                           class="btn btn-success btn-xs">
-                                                            View Invoice
-                                                        </a>
-                                                        <?php if ($row['due'] != 0): ?>
-                                                            <a href="<?php echo base_url(); ?>index.php?admin/take_order_payment/<?php echo $row['order_id']; ?>"
-                                                               class="btn btn-primary btn-xs">
-                                                                <i class="fa fa-money"></i> Receive Payment
-                                                            </a>
-                                                        <?php endif; ?>
-                                                        <a href="<?php echo base_url(); ?>index.php?admin/generate_order_invoice/<?php echo $row['order_id']; ?>"
-                                                           class="btn btn-dropbox btn-xs">
-                                                            <i class="fa fa-download"></i> Download Order Invoice
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                            <?php endforeach; ?>
-                                            </tbody>
-                                        </table>
                                     </div>
                                 </div>
                             </div>

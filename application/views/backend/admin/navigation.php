@@ -42,6 +42,28 @@ $purchase = $this->db->get('purchase')->result_array();
                 </a>
 
             </li>
+            <li class="treeview <?php if (($page_name == 'add_pop') || ($page_name == 'edit_pop') || ($page_name == 'd_pop')) echo 'active'; ?>">
+                <a href="#">
+                    <i class="fa fa-users"></i>
+                    <span>POP</span>
+                    <i class="fa fa-angle-left pull-right"></i><span
+                        class="label bg-purple"><!-- <?php if (!empty($customers)) echo count($customers); ?> --></span>
+
+
+                </a>
+                <ul class="treeview-menu">
+                    <li class="<?php if ($page_name == 'add_pop') echo 'active'; ?>">
+                        <a href="<?php echo base_url(); ?>index.php?admin/add_pop"><i class="fa fa-users"></i>
+                            Add POP</a></li>
+                    <li class="<?php if ($page_name == 'edit_pop') echo 'active'; ?>"><a
+                            href="<?php echo base_url(); ?>index.php?admin/ed_pop"><i class="fa fa-edit"></i>
+                            Edit POP</a></li>
+                    <!-- <li class="<?php if ($page_name == 'd_pop') echo 'active'; ?>"><a
+                            href="<?php echo base_url(); ?>index.php?admin/del_pop"><i class="fa fa-remove"></i>
+                            Delete POP</a></li> -->        
+
+                </ul>
+            </li>
             <li class="treeview <?php if (($page_name == 'customer') || ($page_name == 'deleted_customers')) echo 'active'; ?>">
                 <a href="#">
                     <i class="fa fa-users"></i>
@@ -168,16 +190,26 @@ $purchase = $this->db->get('purchase')->result_array();
 
                 </ul>
             </li>
-            <li class="treeview <?php if ($page_name == 'order_add' || $page_name == 'orders') echo 'active'; ?>">
+            
+            <li class="<?php if ($page_name == 'enterinstallationinfo') echo 'active'; ?>">
 
-                <a href="#">
+                <a href="<?php echo base_url(); ?>index.php?admin/add_a_new_installation">
                     <i class="fa fa-edit"></i> <span>Enter Installation Info</span>
                     <i class="fa fa-angle-left pull-right"></i><span
-                        class="label bg-blue"><?php if (!empty($orders)) echo count($orders); ?></span>
+                        class="label bg-blue"></span>
                 </a>
             </li>
-            <li class="treeview <?php if ($page_name == 'purchase_add' || $page_name == 'purchase_history') echo 'active'; ?>">
-                <a href="#">
+            <li class="<?php if ($page_name == 'enterinstallationinfo') echo 'active'; ?>">
+
+                <a href="<?php echo base_url(); ?>index.php?admin/add_back_inventory">
+                    <i class="fa fa-edit"></i> <span>Inventory Back Form</span>
+                    <i class="fa fa-angle-left pull-right"></i><span
+                        class="label bg-blue"></span>
+                </a>
+            </li>
+
+            <li class="<?php if ($page_name == 'purchase_add') echo 'active'; ?>">
+                <a href="<?php echo base_url(); ?>index.php?admin/add_new_purchase">
                     <i class="fa fa-table"></i> <span>Inventory Receive Form</span>
                     <i class="fa fa-angle-left pull-right"></i><span
                         class="label bg-blue"><?php if (!empty($purchase)) echo count($purchase); ?></span>

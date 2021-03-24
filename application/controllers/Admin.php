@@ -1371,17 +1371,145 @@ class Admin extends CI_Controller
                 $this->db->where('product_id', $product_ids[$i]);
                 $this->db->set('stock_quantity', 'stock_quantity - ' . $quantities[$i], FALSE);
                 $this->db->update('product');
+
+                $data['products_data'] = $product_ids[$i]."-".$quantities[$i];
+
+                $this->db->insert('issue_inventory', $data);
                 //}
             }
         }
-        $data['products_data'] = json_encode($order_entries);
+        // $data['products_data'] = $;
 
-            
-            $this->db->insert('issue_inventory', $data);
+       
             
             $this->session->set_flashdata('flash_message', 'A New Order has Been Created');
             redirect(base_url() . 'index.php?admin/add_a_new_order', 'refresh');
         }
+    }
+
+     function getInventory($param1 = '', $param2 = '', $param3 = '')
+    {
+        if ($this->session->userdata('admin_login') != 1)
+            redirect(base_url() . 'index.php?login');
+        if ($param1 == 'create') {
+            $data['customer_code'] = $this->input->post('customer_code');
+            $data['name'] = $this->input->post('name');
+            // $data['email'] = $this->input->post('email');
+            // $data['password'] = sha1($this->input->post('password'));
+            $data['phone'] = $this->input->post('phone');
+            $data['address'] = $this->input->post('address');
+            $data['client_pop'] = $this->input->post('client_pop');
+            $data['pop_location'] = $this->input->post('pop_location');
+            $this->db->insert('customer', $data);
+            // UPLOAD IMAGE FILE
+            $inventory_id = $this->db->insert_id();
+            // move_uploaded_file($_FILES['userfile']['tmp_name'], 'uploads/customer_image/' . $customer_id . '.jpg');
+
+            // Send mail to newly created customer
+            $password_unhashed = $this->input->post('password');
+            // $email_to = $data['email'];
+            $this->session->set_flashdata('flash_message', 'A New Customer has Been Created');
+            // $this->email_model->account_opening_email('customer', $email_to, $password_unhashed);
+            redirect(base_url() . 'index.php?admin/getInventory', 'refresh');
+        }
+    
+    }
+
+    function add_a_new_installation($param1 = '', $param2 = '')
+    {
+        if ($this->session->userdata('admin_login') != 1)
+            redirect(base_url() . 'index.php?login');
+        $page_data['page_name'] = 'enterinstallationinfo';
+        $page_data['page_title'] = 'Enter Installation Info';
+        $this->load->view('backend/index', $page_data);
+    }
+
+    function getPop($param1 = '', $param2 = '', $param3 = '')
+    {
+        if ($this->session->userdata('admin_login') != 1)
+            redirect(base_url() . 'index.php?login');
+        if ($param1 == 'create') {
+            $data['pop_name'] = $this->input->post('name');
+            $data['pop_location'] = $this->input->post('location');
+            $data['created_by'] = $this->input->post('create');
+            $data['date'] = $this->input->post('creating_timestamp');
+            $this->db->insert('pop', $data);
+            // UPLOAD IMAGE FILE
+            // $customer_id = $this->db->insert_id();
+            // move_uploaded_file($_FILES['userfile']['tmp_name'], 'uploads/customer_image/' . $customer_id . '.jpg');
+
+            // Send mail to newly created customer
+            // $password_unhashed = $this->input->post('password');
+            // $email_to = $data['email'];
+            $this->session->set_flashdata('flash_message', 'A New Customer has Been Created');
+            // $this->email_model->account_opening_email('customer', $email_to, $password_unhashed);
+            redirect(base_url() . 'index.php?admin/add_pop', 'refresh');
+        }
+        if ($param1 == 'edit') {
+            $data['pop_name'] = $this->input->post('name');
+            $data['pop_location'] = $this->input->post('location');
+            $data['created_by'] = $this->input->post('created');
+            $data['date'] = $this->input->post('date');
+            // $data['gender'] = $this->input->post('gender');
+            // $data['discount_percentage'] = $this->input->post('discount_percentage');
+            $this->db->where('pop_id', $param2);
+            $this->db->update('pop', $data);
+
+
+            // move_uploaded_file($_FILES['userfile']['tmp_name'], 'uploads/customer_image/' . $param2 . '.jpg');
+            $this->session->set_flashdata('flash_message', 'Customer Information Has Been Updated');
+            redirect(base_url() . 'index.php?admin/ed_pop', 'refresh');
+        }
+        if ($param1 == 'delete') {
+
+            // For Soft Delete We actually don't need to delete the avatar image
+//            if (file_exists("uploads/customer_image/" . $param2 . ".jpg")) {
+//                unlink("uploads/customer_image/" . $param2 . ".jpg");
+//            }
+            $this->db->where('pop_id', $param2);
+            $this->db->delete('pop');
+            $this->session->set_flashdata('flash_message', 'Customer Information has Been Deleted');
+            redirect(base_url() . 'index.php?admin/ed_pop', 'refresh');
+        }
+        $page_data['page_name'] = 'edit_pop';
+        $page_data['page_title'] = 'Edit POP';
+        $this->load->view('backend/index', $page_data);
+    }
+
+    function add_pop()
+    {
+        if ($this->session->userdata('admin_login') != 1)
+            redirect(base_url() . 'index.php?login');
+        $page_data['page_name'] = 'add_pop';
+        $page_data['page_title'] = 'Add POP';
+        $this->load->view('backend/index', $page_data);
+    }
+
+    function ed_pop()
+    {
+        if ($this->session->userdata('admin_login') != 1)
+            redirect(base_url() . 'index.php?login');
+        $page_data['page_name'] = 'edit_pop';
+        $page_data['page_title'] = 'Edit POP';
+        $this->load->view('backend/index', $page_data);
+    }
+
+    function del_pop()
+    {
+        if ($this->session->userdata('admin_login') != 1)
+            redirect(base_url() . 'index.php?login');
+        $page_data['page_name'] = 'd_pop';
+        $page_data['page_title'] = 'Delete POP';
+        $this->load->view('backend/index', $page_data);
+    }
+
+    function add_back_inventory($param1 = '', $param2 = '')
+    {
+        if ($this->session->userdata('admin_login') != 1)
+            redirect(base_url() . 'index.php?login');
+        $page_data['page_name'] = 'in_back_form';
+        $page_data['page_title'] = 'Inventory Back Form';
+        $this->load->view('backend/index', $page_data);
     }
 
 }

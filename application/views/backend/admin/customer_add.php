@@ -93,10 +93,19 @@
 			Pop
 		</label>
 		<div class="col-md-6 col-sm-6">
-			<select id="popvalue" name="pop_location" class="form-control" disabled>
-				<option>Pop One </option>
-				<option>Pop Two</option>
-			</select>
+			<select onchange="return add_product_for_order(this.value)"
+                                            class="form-control selectpicker" data-size="10" data-live-search="true"
+                                            data-style="btn-default" name="pop_id">
+                                        <option value="" selected>Add A Product</option>
+                                        <?php
+                                        $products = $this->db->query('select * from pop;')->result_array();
+                                        foreach ($products as $row):
+                                            ?>
+                                            <option value="<?php echo $row['pop_id']; ?>">
+                                                <?php echo $row['pop_name']; ?> ( <?php echo $row['pop_location']; ?> )
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
 		</div>
 	</div>
 
